@@ -13,24 +13,24 @@ class BinarySearchTree {
     root() { console.log('root'+this.rooty);
     return this.rooty;
   } 
-  add(value) {
-    this.rooty = addWithin(this.rooty, value);
+  add(data) {
+    this.rooty = addWithin(this.rooty, data);
 
-    function addWithin(node, value) {
+    function addWithin(node, data) {
       if (node) { 
-          if (node.value === value) {
+          if (node.data === data) {
           return node;
           }
 
-          if (value < node.value) {
-          node.left = addWithin(node.left, value);
+          if (data < node.data) {
+          node.left = addWithin(node.left, data);
           } else {
-          node.right = addWithin(node.right, value);
+          node.right = addWithin(node.right, data);
           }
       return node;
       } else { 
        node=new Object; 
-       node.value=value; 
+       node.data=data; 
        node.left=null; 
        node.right=null; 
        return node;
@@ -38,42 +38,55 @@ class BinarySearchTree {
     }
   }
 
-  has(value) {
-    return searchWithin(this.rooty, value);
+  has(data) {
+    return searchWithin(this.rooty, data);
 
-    function searchWithin(node, value) {
+    function searchWithin(node, data) {
       if (!node) {
         return false;
       }
 
-      if (node.value === value) {
+      if (node.data === data) {
         return true;
       }
 
-      return value < node.value ? 
-        searchWithin(node.left, value) : 
-        searchWithin(node.right, value);
+      return data < node.data ? 
+        searchWithin(node.left, data) : 
+        searchWithin(node.right, data);
     }
   }
 
-  find(/* data */) {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
-  }
+  find(data) {
+    return searchWithin(this.rooty, data);
 
-  remove(value) {
-    this.rooty = removeNode(this.rooty, value);
-
-    function removeNode(node, value) {
+    function searchWithin(node, data) {
       if (!node) {
         return null;
       }
 
-      if (value < node.value) {
-        node.left = removeNode(node.left, value);
+      if (node.data === data) {
         return node;
-      } else if (node.value < value) {
-        node.right = removeNode(node.right, value);
+      }
+
+      return data < node.data ? 
+        searchWithin(node.left, data) : 
+        searchWithin(node.right, data);
+    }
+  }
+
+  remove(data) {
+    this.rooty = removeNode(this.rooty, data);
+
+    function removeNode(node, data) {
+      if (!node) {
+        return null;
+      }
+
+      if (data < node.data) {
+        node.left = removeNode(node.left, data);
+        return node;
+      } else if (node.data < data) {
+        node.right = removeNode(node.right, data);
         return node;
       } else {
       
@@ -96,9 +109,9 @@ class BinarySearchTree {
         while (minFromRight.left) {
           minFromRight = minFromRight.left;
         }
-        node.value = minFromRight.value;
+        node.data = minFromRight.data;
 
-        node.right = removeNode(node.right, minFromRight.value);
+        node.right = removeNode(node.right, minFromRight.data);
 
         return node;
       }
@@ -115,7 +128,7 @@ class BinarySearchTree {
       node = node.left;
     }
 
-    return node.value;
+    return node.data;
   }
 
 
@@ -129,7 +142,7 @@ class BinarySearchTree {
       node = node.right;
     }
 
-    return node.value;
+    return node.data;
   }
 }
 
